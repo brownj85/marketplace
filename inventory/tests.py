@@ -4,5 +4,5 @@ from .models import Product
 
 
 class ProductModelTests(TestCase):
-    
-    def  
+
+
