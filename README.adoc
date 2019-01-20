@@ -107,7 +107,7 @@ is already in the cart will remove the product:
 ----
 
 Analagously, calling add_product with a quantity greater 
-than the available inventory for a product will increase
+than the available inventory for a product will
 add the maximum available amount to the cart:
 
 [source, python]
