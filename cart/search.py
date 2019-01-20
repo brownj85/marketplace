@@ -3,7 +3,7 @@ from inventory.constants import MAX_TITLE_LEN
 
 from django.db.models.query import *
 from decimal import *
-from typing import Tuple
+from typing import Tuple, List
 
 class ProductSearch:
     """
@@ -42,7 +42,7 @@ class ProductSearch:
         self.min_qty = min_qty
 
 
-    def query(self) -> QuerySet:
+    def query(self) -> List[Product]:
 
         """
         Perform search with current parameters.
@@ -58,4 +58,4 @@ class ProductSearch:
         if self.price_range is not None:
             match = match.filter(price__range=self.price_range)
 
-        return match
+        return list(match)

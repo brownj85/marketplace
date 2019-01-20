@@ -3,7 +3,6 @@ from typing import Dict, NamedTuple
 from decimal import Decimal
 
 
-
 class CartEntry:
     """ Class representing a single product entry in a shopping cart.
     """
@@ -173,8 +172,4 @@ class Cart:
 
             entry.product.purchase(entry.qty)
 
-        return True
-
-
-
-        
+        return True        

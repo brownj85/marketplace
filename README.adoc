@@ -1,0 +1,147 @@
+= Shopify Internship Challenge
+
+A simple inventory and shopping cart system, written using Python 3.6 and Django.
+
+== Usage
+
+See tests.py for more examples.
+
+Products are implemented as Django models in the inventory app. They have:
+    
+    * title
+    * price
+    * inventory_count
+
+Cart and ProductSearch provide APIs to this model.
+
+=== Search
+
+The ProductSearch class implements a filter-based search functionality. 
+One can search for products by:
+    
+    * available quantity
+    * all or part of the title (case-insenstive)
+    * price range
+
+A search is completed by calling the ProductSearch.query() method, 
+which will return a list of all matching products.
+
+Examples:
+[source, python]
+----
+>>> from inventory.models import Product
+>>> from inventory.search import ProductSearch
+>>> search = ProductSearch(title="car")
+>>> print(search.query())
+    ['Car, Used', 'Car, New']
+>>> search.price_range = (10000, 20000)
+>>> print(search.query())
+    ['Car, Used']
+----
+
+To see the enitre inventory, construct an empty ProductSearch. 
+To filter out products with no stock, set min_qty to 1.
+
+[source, python]
+----
+>>> search = ProductSearch()
+>>> entire_inventory = search.query()
+>>> search.min_qty = 1
+>>> only_available = search.query()
+----
+
+[source, python]
+----
+>>> search = ProductSearch(title="widget", min_qty = 0, price_range = (0, 100))
+>>> print(search.query())
+    ['sold_out_widget', 'new_widget']
+>>> search.min_qty = 1
+>>> print(search.query())
+    ['new_widget']
+----
+
+=== Cart
+
+The Cart class implements a shopping cart. It 
+
+Products are added and removed with the add_product, remove_product  
+methods, which accept a Product and quantity (optional) and return 
+the new in-cart quantity of the given product.
+
+[source, python]
+----
+>>> from cart.cart import Cart
+>>> cart = Cart()
+>>> water = ProductSearch(title='water').query()[0]
+>>> print(cart.add_product(water))
+    1
+>>> print(cart.add_product(water, 10))
+    11
+>>> print(cart.remove_product(water))
+    10
+>>> print(cart.product_quantity(water))
+    10
+----
+
+Calling remove_product with a quantity greater than what
+is already in the cart will remove the product:
+
+[source, python]
+----
+>>> cart.add_product(water, 5)
+>>> print(cart.remove_product(water, 8))
+    0
+>>> print(cart.contains_product(water))
+    False
+----
+
+Analagously, calling add_product with a quantity greater 
+than the available inventory for a product will increase
+add the maximum available amount to the cart:
+
+[source, python]
+----
+>>> print(water.inventory_count)
+    5
+>>> print(cart.add_product(water, 10))
+    5
+----
+
+The validate method checks each entry in the cart
+and verifies whether they are available in
+the requested quantities. It returns a list
+of all Products that are not.
+
+[source, python]
+----
+>>> cart.add_product(water, 5)
+>>> print(cart.validate())
+    []
+----
+
+The complete method checks if the cart is valid,
+and deducts each item from inventory only if
+the cart is valid.
+
+[source, python]
+----
+>>> cart.add_product(water, 5)
+>>> print(cart.complete)
+    True
+----
+
+A cart may become invalid if another cart is completed before it:
+
+[source, python]
+----
+>>> print(water.inventory_count)
+    5
+>>> cart1.add_product(water, 5)
+>>> cart2.add_product(water. 5)
+>>> print((cart1.validate, cart2.validate))
+    [], []
+>>> print(cart1.complete)
+    True
+>>> print(cart2.validate)
+    [Water]
+----
