@@ -73,7 +73,7 @@ To filter out products with no stock, set min_qty to 1.
 
 === Cart
 
-The Cart class implements a shopping cart. It 
+The Cart class implements a shopping cart.
 
 Products are added and removed with the add_product, remove_product  
 methods, which accept a Product and quantity (optional) and return 
