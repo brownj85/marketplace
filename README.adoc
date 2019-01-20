@@ -156,3 +156,6 @@ A cart may become invalid if another cart is completed before it:
 >>> print(cart2.validate)
     [Water]
 ----
+
+== Author
+Jack Brown
