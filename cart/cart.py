@@ -1,6 +1,6 @@
 from inventory.models import Product
 from typing import Dict, NamedTuple
-from decimal import *
+from decimal import Decimal
 
 class CartEntry:
 
