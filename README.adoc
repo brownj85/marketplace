@@ -4,7 +4,18 @@ A simple inventory and shopping cart system, written using Python 3.6 and Django
 
 == Usage
 
-See tests.py for more examples.
+See tests.py for more examples. To run tests, in the project root type:
+
+[source, bash]
+----
+$python manage.py test test
+----
+
+To use the API, enter the django environment with:
+[source, bash]
+----
+$python manage.py shell
+----
 
 Products are implemented as Django models in the inventory app. They have:
     
