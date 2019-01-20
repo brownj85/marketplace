@@ -60,7 +60,7 @@ class Cart:
             str_list.append(str(entry))
 
         str_list.append(str(self.total))
-
+   
         return "\n".join(str_list)
 
     def __edit_entry(self, entry: 'CartEntry', d_qty: int) -> int:
@@ -141,7 +141,7 @@ class Cart:
         """
         return self.add_product(product, -qty)
 
-    
+
     def validate(self) -> Dict[int, 'CartEntry']:
         """
         check each entry in the cart for validity,
@@ -172,4 +172,23 @@ class Cart:
 
             entry.product.purchase(entry.qty)
 
-        return True        
+        return True
+
+    def contains_product(self, product: 'Product') -> bool:
+        """
+        return true if product is in the cart,
+        false otherwise.
+        """
+        return product.id in self.entires.keys()
+
+    
+    def product_quantity(self, product: 'Product') -> int:
+        """
+        return the number of the given product in cart,
+        0 otherwise
+        """
+        if self.contains_product(product):
+            return self.entries[product.id].qty
+
+        else:
+            return 0

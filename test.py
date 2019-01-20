@@ -1,5 +1,5 @@
 from django.test import TestCase
-from cart.search import ProductSearch
+from inventory.search import ProductSearch
 from inventory.models import Product
 from inventory.constants import *
 
