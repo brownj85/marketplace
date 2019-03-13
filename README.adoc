@@ -1,4 +1,4 @@
-= Shopify Internship Challenge
+= marketplace
 
 A simple inventory and shopping cart system, written using Python 3.6 and Django.
 
